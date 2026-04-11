@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Size Converter</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="back">← Back</a>
+
+    <h1>File Size Converter</h1>
+
+    <div class="card tool-card">
+
+        <!-- Input -->
+        <input type="number" id="value" placeholder="Enter value">
+
+        <!-- From -->
+        <select id="from">
+            <option value="B">Bytes (B)</option>
+            <option value="KB">Kilobytes (KB)</option>
+            <option value="MB">Megabytes (MB)</option>
+            <option value="GB">Gigabytes (GB)</option>
+            <option value="TB">Terabytes (TB)</option>
+        </select>
+
+        <!-- To -->
+        <select id="to">
+            <option value="B">Bytes (B)</option>
+            <option value="KB">Kilobytes (KB)</option>
+            <option value="MB">Megabytes (MB)</option>
+            <option value="GB">Gigabytes (GB)</option>
+            <option value="TB">Terabytes (TB)</option>
+        </select>
+
+        <button onclick="swap()">Swap</button>
+
+        <button onclick="convert()">Convert</button>
+
+        <p id="result">Result: -</p>
+
+    </div>
+
+</div>
+
+<script src="file.js"></script>
+</body>
+</html>

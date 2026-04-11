@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BMI Calculator</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <!-- Back -->
+    <a href="../index.html" class="back">← Back</a>
+
+    <h1>BMI Calculator</h1>
+
+    <div class="card tool-card">
+
+        <!-- Unit switch -->
+        <select id="unit">
+            <option value="metric">Metric (kg, cm)</option>
+            <option value="imperial">Imperial (lbs, inches)</option>
+        </select>
+
+        <!-- Inputs -->
+        <input type="number" id="weight" placeholder="Weight">
+        <input type="number" id="height" placeholder="Height">
+
+        <button onclick="calculateBMI()">Calculate</button>
+
+        <!-- Result -->
+        <p id="result">Your BMI: -</p>
+        <p id="category"></p>
+
+    </div>
+
+</div>
+
+<script src="bmi.js"></script>
+</body>
+</html>

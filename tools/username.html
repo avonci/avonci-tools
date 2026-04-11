@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Username Generator</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="back">← Back</a>
+
+    <h1>Username Generator</h1>
+
+    <div class="card tool-card">
+
+        <!-- Options -->
+        <label>
+            <input type="checkbox" id="numbers" checked>
+            Include numbers
+        </label>
+
+        <label>
+            <input type="checkbox" id="underscore">
+            Include underscore (_)
+        </label>
+
+        <label>
+            <input type="checkbox" id="short">
+            Short usernames
+        </label>
+
+        <button onclick="generate()">Generate</button>
+        <button onclick="copy()">Copy</button>
+
+        <p id="result">Username: -</p>
+
+    </div>
+
+</div>
+
+<script src="username.js"></script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+/* =========================
+   🎨 GLOBAL DESIGN SYSTEM
+========================= */
+
+:root {
+    --bg: #0f172a;
+    --card: #1e293b;
+    --card-hover: #334155;
+
+    --text: #ffffff;
+    --muted: #94a3b8;
+
+    --primary: #3b82f6;
+    --primary-hover: #2563eb;
+
+    --radius: 12px;
+    --transition: 0.2s ease;
+}
+
+/* =========================
+   RESET
+========================= */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+/* =========================
+   BASE
+========================= */
+
+body {
+    background: var(--bg);
+    color: var(--text);
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* =========================
+   LAYOUT
+========================= */
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+/* =========================
+   TYPOGRAPHY
+========================= */
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: var(--muted);
+    margin-bottom: 30px;
+}
+
+/* =========================
+   SEARCH
+========================= */
+
+.search-box input {
+    width: 100%;
+    padding: 12px;
+    border-radius: var(--radius);
+    border: 1px solid #334155;
+    outline: none;
+    margin-bottom: 30px;
+    font-size: 1rem;
+    background: #0f172a;
+    color: var(--text);
+    transition: var(--transition);
+}
+
+.search-box input:focus {
+    border-color: var(--primary);
+}
+
+/* =========================
+   GRID + CARDS
+========================= */
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: var(--card);
+    padding: 25px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    color: var(--text);
+    font-weight: bold;
+    transition: var(--transition);
+    cursor: pointer;
+}
+
+.card:hover {
+    background: var(--card-hover);
+    box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+    transform: translateY(-2px);
+}
+
+/* =========================
+   TOOL PAGES
+========================= */
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: var(--muted);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.back:hover {
+    color: var(--text);
+}
+
+/* TOOL CONTAINER */
+.tool-card {
+    max-width: 420px;
+    margin: auto;
+    text-align: center;
+    background: var(--card);
+    padding: 25px;
+    border-radius: var(--radius);
+}
+
+/* =========================
+   INPUTS / SELECTS
+========================= */
+
+.tool-card input,
+.tool-card select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: var(--radius);
+    border: 1px solid #334155;
+    outline: none;
+    background: #0f172a;
+    color: var(--text);
+    transition: var(--transition);
+}
+
+.tool-card input:focus,
+.tool-card select:focus {
+    border-color: var(--primary);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.tool-card button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: var(--radius);
+    background: var(--primary);
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.tool-card button:hover {
+    background: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+/* =========================
+   RESULT TEXT
+========================= */
+
+#result {
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+/* =========================
+   PASSWORD TOOL
+========================= */
+
+.strength-bar {
+    width: 100%;
+    height: 10px;
+    background: #334155;
+    border-radius: var(--radius);
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+#strength-fill {
+    height: 100%;
+    width: 0%;
+    transition: 0.3s ease;
+}
+
+/* Tips */
+#tips {
+    text-align: left;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: var(--muted);
+}
+
+#tips li {
+    margin: 5px 0;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 600px) {
+    .container {
+        padding: 20px 15px;
+    }
+
+    header h1 {
+        font-size: 2rem;
+    }
+}
+
+#speed-fill {
+    height: 100%;
+    width: 0%;
+    background: var(--primary);
+    transition: 0.3s ease;
+}

@@ -1,0 +1,136 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background: #0f172a;
+    color: white;
+}
+
+.container {
+    max-width: 900px;
+    margin: auto;
+    padding: 40px 20px;
+    text-align: center;
+}
+
+header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+}
+
+header p {
+    color: #94a3b8;
+    margin-bottom: 30px;
+}
+
+/* Search */
+.search-box input {
+    width: 100%;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+    margin-bottom: 30px;
+    font-size: 1rem;
+}
+
+/* Grid */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+/* Cards */
+.card {
+    background: #1e293b;
+    padding: 25px;
+    border-radius: 15px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: 0.2s;
+}
+
+.card:hover {
+    background: #334155;
+}
+
+/* Tool page specific */
+
+.back {
+    display: inline-block;
+    margin-bottom: 20px;
+    color: #94a3b8;
+    text-decoration: none;
+}
+
+.tool-card {
+    max-width: 400px;
+    margin: auto;
+    text-align: center;
+}
+
+.tool-card input,
+.tool-card select {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border-radius: 10px;
+    border: none;
+    outline: none;
+}
+
+.tool-card button {
+    width: 100%;
+    padding: 12px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: #3b82f6;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.tool-card button:hover {
+    background: #2563eb;
+}
+
+#result {
+    margin-top: 20px;
+    font-size: 1.2rem;
+}
+
+/* Password strength */
+
+.strength-bar {
+    width: 100%;
+    height: 10px;
+    background: #334155;
+    border-radius: 10px;
+    margin-top: 10px;
+    overflow: hidden;
+}
+
+#strength-fill {
+    height: 100%;
+    width: 0%;
+    transition: 0.3s;
+}
+
+/* Tips */
+#tips {
+    text-align: left;
+    margin-top: 15px;
+    font-size: 0.9rem;
+    color: #94a3b8;
+}
+
+#tips li {
+    margin: 5px 0;
+}
