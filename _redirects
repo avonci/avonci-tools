@@ -1,0 +1,11 @@
+# Redirect old HTML URLs to clean URLs
+
+/tools/bmi.html /tools/bmi 301
+/tools/file.html /tools/file 301
+/tools/password.html /tools/password 301
+/tools/speed.html /tools/speed 301
+/tools/json.html /tools/json 301
+/tools/regex.html /tools/regex 301
+/tools/color.html /tools/color 301
+/tools/timer.html /tools/timer 301
+/tools/username.html /tools/username 301
