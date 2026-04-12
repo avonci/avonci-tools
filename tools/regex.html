@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Regex Tester – Test Regular Expressions | Avonci Tools</title>
+    <meta name="description" content="Test and debug regular expressions online with live matching and highlighting. Free regex tester.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="canonical" href="https://avonci.net/tools/regex">
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        textarea, input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .output {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
+
+        .highlight {
+            background: #3b82f6;
+            color: white;
+            border-radius: 4px;
+            padding: 2px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="../index.html" class="back">← Back</a>
+
+    <h1>Regex Tester</h1>
+
+    <input type="text" id="pattern" placeholder="Enter regex pattern (e.g. \\d+)">
+
+    <textarea id="text" rows="6" placeholder="Enter text to test..."></textarea>
+
+    <div id="result" class="output"></div>
+
+</div>
+
+<script>
+const patternInput = document.getElementById("pattern");
+const textInput = document.getElementById("text");
+const resultDiv = document.getElementById("result");
+
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, m => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[m]);
+}
+
+function update() {
+    const pattern = patternInput.value;
+    const text = textInput.value;
+
+    if (!pattern) {
+        resultDiv.innerHTML = escapeHTML(text);
+        return;
+    }
+
+    try {
+        const regex = new RegExp(pattern, 'g');
+        let matchCount = 0;
+
+        const highlighted = escapeHTML(text).replace(regex, match => {
+            matchCount++;
+            return `<span class="highlight">${match}</span>`;
+        });
+
+        resultDiv.innerHTML = highlighted + `<br><br>Matches: ${matchCount}`;
+    } catch (e) {
+        resultDiv.innerHTML = "Invalid regex pattern";
+    }
+}
+
+patternInput.addEventListener("input", update);
+textInput.addEventListener("input", update);
+</script>
+
+</body>
+</html>
