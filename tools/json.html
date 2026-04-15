@@ -12,7 +12,7 @@
 
     <meta charset="UTF-8">
     <title>JSON ↔ XML Converter Online | Avonci Tools</title>
-    <meta name="description" content="Convert JSON to XML and XML to JSON instantly. Free online converter tool with no upload required.">
+    <meta name="description" content="Convert JSON to XML and XML to JSON instantly. Free online converter with formatting and copy support.">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="robots" content="index, follow">
 
@@ -28,7 +28,7 @@
     <style>
         textarea {
             width: 100%;
-            height: 150px;
+            height: 160px;
             padding: 12px;
             margin: 10px 0;
             border-radius: 10px;
@@ -39,10 +39,19 @@
         .buttons {
             display: flex;
             gap: 10px;
+            margin-bottom: 10px;
         }
 
         .buttons button {
             flex: 1;
+        }
+
+        .copy-btn {
+            background: #22c55e;
+        }
+
+        .copy-btn:hover {
+            background: #16a34a;
         }
 
         .error {
@@ -71,6 +80,10 @@
 
         <textarea id="output" placeholder="Result will appear here..."></textarea>
 
+        <div class="buttons">
+            <button class="copy-btn" onclick="copyOutput()">Copy Output</button>
+        </div>
+
         <div id="error" class="error"></div>
 
     </div>
@@ -78,6 +91,7 @@
 </div>
 
 <script>
+// ---------- JSON → XML ----------
 function jsonToXml() {
     const input = document.getElementById("input").value;
     const output = document.getElementById("output");
@@ -98,11 +112,25 @@ function convertToXml(obj, indent = "") {
     let xml = "";
 
     for (let key in obj) {
-        if (typeof obj[key] === "object") {
+        if (Array.isArray(obj[key])) {
+            xml += `${indent}<${key}>\n`;
+            obj[key].forEach(item => {
+                if (typeof item === "object") {
+                    xml += `${indent}  <item>\n`;
+                    xml += convertToXml(item, indent + "    ");
+                    xml += `${indent}  </item>\n`;
+                } else {
+                    xml += `${indent}  <item>${item}</item>\n`;
+                }
+            });
+            xml += `${indent}</${key}>\n`;
+        } 
+        else if (typeof obj[key] === "object") {
             xml += `${indent}<${key}>\n`;
             xml += convertToXml(obj[key], indent + "  ");
             xml += `${indent}</${key}>\n`;
-        } else {
+        } 
+        else {
             xml += `${indent}<${key}>${obj[key]}</${key}>\n`;
         }
     }
@@ -110,6 +138,7 @@ function convertToXml(obj, indent = "") {
     return xml;
 }
 
+// ---------- XML → JSON ----------
 function xmlToJson() {
     const input = document.getElementById("input").value;
     const output = document.getElementById("output");
@@ -136,14 +165,42 @@ function xmlToJsonRecursive(node) {
     let obj = {};
 
     if (node.children.length === 0) {
-        return node.textContent;
+        return parseValue(node.textContent);
     }
 
     for (let child of node.children) {
-        obj[child.nodeName] = xmlToJsonRecursive(child);
+        const name = child.nodeName;
+        const value = xmlToJsonRecursive(child);
+
+        if (obj[name]) {
+            if (!Array.isArray(obj[name])) {
+                obj[name] = [obj[name]];
+            }
+            obj[name].push(value);
+        } else {
+            obj[name] = value;
+        }
     }
 
     return obj;
+}
+
+// ---------- Value parsing ----------
+function parseValue(value) {
+    value = value.trim();
+
+    if (value === "true") return true;
+    if (value === "false") return false;
+    if (!isNaN(value) && value !== "") return Number(value);
+
+    return value;
+}
+
+// ---------- Copy ----------
+function copyOutput() {
+    const output = document.getElementById("output");
+    output.select();
+    document.execCommand("copy");
 }
 </script>
 
