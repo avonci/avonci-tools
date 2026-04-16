@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Unit Converter – Length, Weight, Temp & Data | Avonci Tools</title>
+    <meta name="description" content="Free online unit converter. Convert length, weight, temperature, and file sizes (KB, MB, GB) instantly.">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://avonci.net/tools/unit">
+
+    <meta property="og:title" content="Universal Unit Converter – Avonci Tools">
+    <meta property="og:description" content="Convert any unit: Metric, Imperial, Temperature, and Data storage.">
+    <meta property="og:url" content="https://avonci.net/tools/unit.html">
+    <meta name="keywords" content="unit converter, length converter, weight converter, temp converter, mb to gb">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+</head>
+<body>
+
+<div class="container">
+    <a href="../index.html" class="back">← Back</a>
+
+    <h1>Unit Converter</h1>
+    <p>Convert Length, Weight, Temperature, and Data instantly.</p>
+
+    <div class="card tool-card">
+        <label style="font-size: 0.8rem; color: var(--muted); display: block; text-align: left; margin-bottom: 5px;">Category</label>
+        <select id="category" onchange="updateUnits()">
+            <option value="data">Data (KB, MB, GB...)</option>
+            <option value="length">Length (m, km, ft...)</option>
+            <option value="weight">Weight (kg, lb, oz...)</option>
+            <option value="temp">Temperature (°C, °F, K)</option>
+        </select>
+
+        <input type="number" id="value" placeholder="Enter value" oninput="convert()">
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+            <div>
+                <label style="font-size: 0.8rem; color: var(--muted);">From</label>
+                <select id="from" onchange="convert()"></select>
+            </div>
+            <div>
+                <label style="font-size: 0.8rem; color: var(--muted);">To</label>
+                <select id="to" onchange="convert()"></select>
+            </div>
+        </div>
+
+        <button onclick="swap()" style="background: var(--card-hover); margin-top: 15px;">⇅ Swap Units</button>
+
+        <div id="result-box" style="margin-top: 20px; padding: 15px; background: #0f172a; border-radius: var(--radius);">
+            <p id="result" style="font-size: 1.2rem; font-weight: bold; color: var(--primary);">Result: -</p>
+        </div>
+    </div>
+</div>
+
+<script src="unit.js"></script>
+</body>
+</html>
