@@ -76,14 +76,28 @@ function spin() {
 
 function determineWinner() {
     const arcSize = (2 * Math.PI) / items.length;
-    // Normalize rotation and find which slice is at the top (-90 degrees)
     const normalizedRotation = (currentRotation % (2 * Math.PI));
-    const winningIndex = Math.floor((items.length - (normalizedRotation / arcSize)) % items.length);
     
-    // Correction for the "Pointer" being at the top (1.5 * PI)
-    const correctedIndex = Math.floor(((1.5 * Math.PI - normalizedRotation + 2 * Math.PI) % (2 * Math.PI)) / arcSize);
+    // Calculate the index based on the pointer at the top
+    const winningIndex = Math.floor(((1.5 * Math.PI - normalizedRotation + 10 * Math.PI) % (2 * Math.PI)) / arcSize);
+    const winner = items[winningIndex];
     
-    winnerDisplay.innerText = "Winner: " + items[correctedIndex];
+    winnerDisplay.innerText = "Winner: " + winner;
+
+    // Remove the winner from the list after a short delay
+    setTimeout(() => {
+        if (confirm(`Remove "${winner}" from the list?`)) {
+            // Filter out the winner
+            const newItems = items.filter((_, index) => index !== winningIndex);
+            
+            // Update the textarea (joining with new lines)
+            input.value = newItems.join('\n');
+            
+            // Redraw the wheel with the remaining items
+            drawWheel();
+            winnerDisplay.innerText = "Next round!";
+        }
+    }, 1000); // 1 second delay so they can celebrate
 }
 
 // Redraw when typing
