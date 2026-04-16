@@ -241,3 +241,35 @@ button:active {
 .back + .search-box {
     display: none;
 }
+
+/* 🔧 The "Center Everything" Patch */
+
+/* Centers the card container itself on the page */
+.tool-card {
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+/* Fix for Study Timer, Word Counter, and Picker layout */
+.tool-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important; /* Forces internal items to the center */
+    text-align: center !important; /* Reverts text centering for these tools */
+}
+
+/* Ensure textareas and inputs still look good when centered */
+.tool-card textarea, 
+.tool-card input {
+    text-align: left; /* Keep the typing area left-aligned for better UX */
+    width: 100% !important;
+    max-width: 500px; /* Prevents them from getting too wide on desktop */
+}
+
+/* Specific fix for the 'Back' button to stay on the left */
+.back {
+    display: block;
+    width: fit-content;
+    margin-left: 0;
+    margin-right: auto;
+}
