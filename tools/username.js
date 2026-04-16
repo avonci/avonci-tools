@@ -1,10 +1,10 @@
 function generate() {
     const adjectives = [
-        "cool", "fast", "dark", "silent", "crazy", "smart", "wild", "jewish", "black", "retardet", "white", "the", "stupid",
+        "cool", "fast", "dark", "silent", "crazy", "smart", "wild", "jewish", "black", "retardet", "white", "the", "stupid", "zesty", "stinky", "smelly", "small", "big", "useless"
     ];
 
     const nouns = [
-        "tiger", "ghost", "ninja", "coder", "dragon", "wolf", "shadow", "nigger", "fucker", "assassin", "nigga", "retard", "jew", "fuck", "cunt", "digga", "nazi", "goat", "G.O.A.T"
+        "tiger", "ghost", "ninja", "lion", "dragon", "wolf", "shadow", "nigger", "fucker", "assassin", "nigga", "retard", "jew", "fuck", "cunt", "digga", "nazi", "goat", "G.O.A.T", "chonker", "chungus", "dick", "balls", "faggot", "gayboy", "ladyboy", "šilček"
     ];
 
     const useNumbers = document.getElementById("numbers").checked;
