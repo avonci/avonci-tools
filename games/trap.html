@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Trap – Social Mystery Game | Avonci Games</title>
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <style>
+        .step { display: none; }
+        .active { display: block; }
+        .answer-list { list-style: none; padding: 0; }
+        .answer-item { 
+            background: #1e293b; 
+            margin: 10px 0; 
+            padding: 15px; 
+            border-radius: 10px; 
+            font-size: 1.2rem;
+            border-left: 5px solid var(--primary);
+        }
+        input { width: 100%; margin: 10px 0; padding: 12px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="../index.html" class="back">← Back</a>
+
+    <div class="card tool-card" style="text-align: center;">
+        <h1>🕵️ The Trap</h1>
+
+        <div id="step1" class="step active">
+            <p>How many players?</p>
+            <input type="number" id="playerCount" value="3" min="3" max="10">
+            <button class="copy-btn" onclick="setupGame()">Next</button>
+        </div>
+
+        <div id="step2" class="step">
+            <h2 id="playerTurn">Player 1</h2>
+            <p id="questionDisplay" style="font-weight: bold; color: var(--primary);"></p>
+            <input type="text" id="answerInput" placeholder="Your answer...">
+            <button class="copy-btn" onclick="submitAnswer()">Submit & Pass</button>
+        </div>
+
+        <div id="step3" class="step">
+            <h2>The Results</h2>
+            <p>Read these out loud. One of these people answered a completely different question!</p>
+            <ul id="resultsList" class="answer-list"></ul>
+            <button class="copy-btn" onclick="location.reload()" style="background:#ef4444;">New Game</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const scenarios = [
+        { q: "How many weeks without changing bed sheets?", trap: "How many weeks is a perfect vacation?" },
+        { q: "How many hours of sleep do you need?", trap: "How many hours can you stay at a party?" },
+        { q: "How many showers do you take a week?", trap: "How many times a week do you eat out?" },
+        { q: "What's the max price you'd pay for a burger?", trap: "What's the max price you'd pay for a movie ticket?" }
+    ];
+
+    let players = [];
+    let currentP = 0;
+    let totalP = 0;
+    let imposterIdx = 0;
+    let currentScenario;
+
+    function setupGame() {
+        totalP = document.getElementById('playerCount').value;
+        imposterIdx = Math.floor(Math.random() * totalP);
+        currentScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
+        showStep(2);
+        updateQuestion();
+    }
+
+    function updateQuestion() {
+        document.getElementById('playerTurn').innerText = `Player ${currentP + 1}`;
+        document.getElementById('questionDisplay').innerText = (currentP == imposterIdx) ? currentScenario.trap : currentScenario.q;
+        document.getElementById('answerInput').value = "";
+    }
+
+    function submitAnswer() {
+        const val = document.getElementById('answerInput').value;
+        if(!val) return alert("Enter something!");
+        
+        players.push(val);
+        currentP++;
+
+        if(currentP < totalP) {
+            updateQuestion();
+            alert("Answer saved! Pass the phone to the next player.");
+        } else {
+            showResults();
+        }
+    }
+
+    function showResults() {
+        const list = document.getElementById('resultsList');
+        // Shuffle results so the order doesn't give away the imposter
+        const shuffled = players.map((a, i) => ({a, i})).sort(() => Math.random() - 0.5);
+        
+        list.innerHTML = shuffled.map(item => `<li class="answer-item">"${item.a}"</li>`).join('');
+        showStep(3);
+    }
+
+    function showStep(n) {
+        document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+        document.getElementById('step'+n).classList.add('active');
+    }
+</script>
+</body>
+</html>
