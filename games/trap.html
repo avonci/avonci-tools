@@ -14,22 +14,35 @@
     <title>The Trap – Social Mystery Game | Avonci Games</title>
     <link rel="stylesheet" href="../style.css">
     <link rel="icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
     <style>
         .step { display: none; }
         .active { display: block; }
-        .answer-list { list-style: none; padding: 0; }
+        
+        .answer-list { list-style: none; padding: 0; margin-top: 20px; }
         .answer-item { 
-            background: #1e293b; 
+            background: var(--card-bg); 
             margin: 10px 0; 
-            padding: 15px; 
-            border-radius: 10px; 
+            padding: 20px; 
+            border-radius: 12px; 
             font-size: 1.2rem;
-            border-left: 5px solid var(--primary);
+            border-left: 4px solid var(--primary);
+            text-align: left;
         }
-        input { width: 100%; margin: 10px 0; padding: 12px; }
+
+        #secretContent {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+        }
+
+        .reveal-overlay {
+            padding: 40px 20px;
+            border: 2px dashed var(--border);
+            border-radius: 15px;
+            margin: 20px 0;
+        }
     </style>
 </head>
 <body>
@@ -41,23 +54,32 @@
         <h1>🕵️ The Trap</h1>
 
         <div id="step1" class="step active">
-            <p>How many players?</p>
-            <input type="number" id="playerCount" value="3" min="3" max="10">
-            <button class="copy-btn" onclick="setupGame()">Next</button>
+            <p>Gather your friends. How many are playing?</p>
+            <input type="number" id="playerCount" value="3" min="3" max="12">
+            <button class="copy-btn" onclick="setupGame()">Start Game</button>
         </div>
 
         <div id="step2" class="step">
             <h2 id="playerTurn">Player 1</h2>
-            <p id="questionDisplay" style="font-weight: bold; color: var(--primary);"></p>
-            <input type="text" id="answerInput" placeholder="Your answer...">
-            <button class="copy-btn" onclick="submitAnswer()">Submit & Pass</button>
+            
+            <div id="gatekeeper" class="reveal-overlay">
+                <p>Pass the phone to <span id="targetPlayer" style="color: var(--primary); font-weight: bold;">Player 1</span></p>
+                <button class="copy-btn" onclick="revealForPlayer()">I am Player <span id="btnNum">1</span></button>
+            </div>
+
+            <div id="secretContent" style="display:none;">
+                <p>Your Secret Question:</p>
+                <p id="questionDisplay" style="font-size: 1.3rem; font-weight: bold; color: var(--primary); margin: 15px 0;"></p>
+                <input type="text" id="answerInput" placeholder="Enter a short answer..." autocomplete="off">
+                <button class="copy-btn" onclick="submitAnswer()">Submit & Hide</button>
+            </div>
         </div>
 
         <div id="step3" class="step">
             <h2>The Results</h2>
-            <p>Read these out loud. One of these people answered a completely different question!</p>
+            <p style="margin-bottom: 20px;">One of these answers was for a <strong>different question</strong>. Find the imposter!</p>
             <ul id="resultsList" class="answer-list"></ul>
-            <button class="copy-btn" onclick="location.reload()" style="background:#ef4444;">New Game</button>
+            <button class="copy-btn" onclick="location.reload()" style="background:#ef4444; margin-top: 30px;">Play Again</button>
         </div>
     </div>
 </div>
@@ -67,7 +89,9 @@
         { q: "How many weeks without changing bed sheets?", trap: "How many weeks is a perfect vacation?" },
         { q: "How many hours of sleep do you need?", trap: "How many hours can you stay at a party?" },
         { q: "How many showers do you take a week?", trap: "How many times a week do you eat out?" },
-        { q: "What's the max price you'd pay for a burger?", trap: "What's the max price you'd pay for a movie ticket?" }
+        { q: "What's the max price you'd pay for a burger?", trap: "What's the max price you'd pay for a movie ticket?" },
+        { q: "How many pairs of shoes do you own?", trap: "How many slices of pizza can you eat?" },
+        { q: "How many minutes is a good workout?", trap: "How many minutes do you spend on TikTok daily?" }
     ];
 
     let players = [];
@@ -77,29 +101,42 @@
     let currentScenario;
 
     function setupGame() {
-        totalP = document.getElementById('playerCount').value;
+        totalP = parseInt(document.getElementById('playerCount').value);
         imposterIdx = Math.floor(Math.random() * totalP);
         currentScenario = scenarios[Math.floor(Math.random() * scenarios.length)];
         showStep(2);
-        updateQuestion();
+        prepareTurn();
     }
 
-    function updateQuestion() {
+    function prepareTurn() {
+        // Reset the UI for the next person
         document.getElementById('playerTurn').innerText = `Player ${currentP + 1}`;
-        document.getElementById('questionDisplay').innerText = (currentP == imposterIdx) ? currentScenario.trap : currentScenario.q;
+        document.getElementById('targetPlayer').innerText = `Player ${currentP + 1}`;
+        document.getElementById('btnNum').innerText = currentP + 1;
+        
+        document.getElementById('gatekeeper').style.display = "block";
+        document.getElementById('secretContent').style.display = "none";
         document.getElementById('answerInput').value = "";
     }
 
+    function revealForPlayer() {
+        // Show the secret question
+        document.getElementById('questionDisplay').innerText = (currentP == imposterIdx) ? currentScenario.trap : currentScenario.q;
+        
+        document.getElementById('gatekeeper').style.display = "none";
+        document.getElementById('secretContent').style.display = "block";
+        document.getElementById('answerInput').focus();
+    }
+
     function submitAnswer() {
-        const val = document.getElementById('answerInput').value;
-        if(!val) return alert("Enter something!");
+        const val = document.getElementById('answerInput').value.trim();
+        if(!val) return alert("Please enter an answer!");
         
         players.push(val);
         currentP++;
 
         if(currentP < totalP) {
-            updateQuestion();
-            alert("Answer saved! Pass the phone to the next player.");
+            prepareTurn();
         } else {
             showResults();
         }
@@ -107,10 +144,12 @@
 
     function showResults() {
         const list = document.getElementById('resultsList');
-        // Shuffle results so the order doesn't give away the imposter
-        const shuffled = players.map((a, i) => ({a, i})).sort(() => Math.random() - 0.5);
+        // Shuffle the results so the order doesn't give away the imposter
+        const shuffled = players
+            .map((val) => ({ val, sort: Math.random() }))
+            .sort((a, b) => a.sort - b.sort);
         
-        list.innerHTML = shuffled.map(item => `<li class="answer-item">"${item.a}"</li>`).join('');
+        list.innerHTML = shuffled.map(item => `<li class="answer-item">"${item.val}"</li>`).join('');
         showStep(3);
     }
 
@@ -119,5 +158,6 @@
         document.getElementById('step'+n).classList.add('active');
     }
 </script>
+
 </body>
 </html>
