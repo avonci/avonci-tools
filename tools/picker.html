@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Name Picker & Wheel Spinner | Avonci Tools</title>
+    <meta name="description" content="Free online random name picker. Input your list and spin the wheel to choose a random winner.">
+    <link rel="canonical" href="https://avonci.net/tools/bmi">
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  
+    <link rel="stylesheet" href="../style.css">
+    
+    <style>
+        .picker-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+            box-shadow: 0 0 20px rgba(0,0,0,0.5);
+        }
+        #wheel-wrapper {
+            position: relative;
+        }
+        /* The "Pointer" at the top */
+        #wheel-wrapper::after {
+            content: "▼";
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ef4444;
+            font-size: 2rem;
+            z-index: 10;
+        }
+        textarea {
+            width: 100%;
+            height: 120px;
+            background: #0f172a;
+            color: white;
+            border: 1px solid #334155;
+            padding: 10px;
+            border-radius: var(--radius);
+            resize: vertical;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="../index.html" class="back">← Back</a>
+
+    <div class="card tool-card" style="max-width: 600px;">
+        <h1>Random Picker</h1>
+        <p style="color: var(--muted); margin-bottom: 20px;">Enter items (one per line) and spin!</p>
+
+        <textarea id="itemsInput" placeholder="Item 1&#10;Item 2&#10;Item 3">Apple
+Banana
+Cherry
+Date</textarea>
+
+        <div class="picker-container">
+            <div id="wheel-wrapper">
+                <canvas id="wheel" width="400" height="400"></canvas>
+            </div>
+            
+            <button onclick="spin()" id="spinBtn" style="font-size: 1.2rem; padding: 15px;">SPIN!</button>
+        </div>
+
+        <h2 id="winnerDisplay" style="margin-top: 20px; color: var(--primary);"></h2>
+    </div>
+</div>
+
+<script src="picker.js"></script>
+</body>
+</html>
