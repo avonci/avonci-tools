@@ -4,17 +4,22 @@
     <loc>https://avonci.net/</loc>
     <priority>1.0</priority>
   </url>
+
   <url>
     <loc>https://avonci.net/tools/bmi</loc>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://avonci.net/tools/file</loc>
-    <priority>0.9</priority>
+    <loc>https://avonci.net/tools/unit</loc> <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://avonci.net/tools/regex</loc>
-    <priority>0.9</priority>
+    <loc>https://avonci.net/tools/qr</loc> <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://avonci.net/tools/ip</loc> <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://avonci.net/tools/word-counter</loc> <priority>0.9</priority>
   </url>
   <url>
     <loc>https://avonci.net/tools/password</loc>
@@ -24,13 +29,13 @@
     <loc>https://avonci.net/tools/speed</loc>
     <priority>0.9</priority>
   </url>
+
   <url>
     <loc>https://avonci.net/tools/json</loc>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://avonci.net/tools/regex</loc>
-    <priority>0.8</priority>
+    <loc>https://avonci.net/tools/regex</loc> <priority>0.8</priority>
   </url>
   <url>
     <loc>https://avonci.net/tools/color</loc>
