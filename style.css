@@ -199,3 +199,45 @@ button:active {
     .grid { grid-template-columns: 1fr 1fr; } /* 2 columns on mobile */
     .tool-card { padding: 20px; }
 }
+
+/* 🛠️ SPECIFIC TOOL PAGE OVERRIDE */
+
+/* Force tool card content to stack vertically */
+.tool-card {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: stretch !important;
+    text-align: left; /* Better for forms */
+    gap: 10px;
+}
+
+/* Ensure headings in tools look like headings, not grid items */
+.tool-card h1, .tool-card h2, .tool-card p {
+    display: block !important;
+    width: 100%;
+    margin-bottom: 15px;
+}
+
+/* Fix inputs/buttons that were stretching or squashing */
+.tool-card input, 
+.tool-card select, 
+.tool-card button,
+.tool-card textarea {
+    display: block !important;
+    width: 100% !important;
+    margin: 8px 0 !important;
+    height: auto;
+}
+
+/* Special fix for tools with small grids (like Case Converter buttons) */
+.case-grid {
+    display: grid !important;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)) !important;
+    gap: 10px !important;
+    width: 100%;
+}
+
+/* Hide the search box on tool pages since it only belongs on index */
+.back + .search-box {
+    display: none;
+}
