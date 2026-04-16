@@ -88,13 +88,39 @@ h2.section-title {
 }
 
 /* Tool Specific Cards */
-.tool-card {
-    background: var(--card-bg);
-    border: 1px solid var(--border);
-    padding: 32px;
-    border-radius: 24px;
-    max-width: 600px;
-    margin: 20px auto;
+.tool-card h1 {
+    -webkit-text-fill-color: var(--text); /* Makes tool titles readable */
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+}
+
+.tool-card p {
+    margin-bottom: 20px;
+    color: var(--muted);
+}
+
+/* Ensure inputs and buttons don't touch */
+.tool-card input, 
+.tool-card select, 
+.tool-card button {
+    margin-top: 8px;
+    margin-bottom: 8px;
+    display: block;
+    width: 100%;
+}
+
+/* For tools that use side-by-side buttons (like the Case Converter) */
+.case-grid, .grid-small {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin-top: 15px;
+}
+
+/* Fix for the back button color in tool pages */
+.back {
+    color: var(--primary) !important;
+    font-weight: 500;
 }
 
 /* Inputs & UI Elements */
