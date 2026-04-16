@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Imposter – Social Deduction Game | Avonci Games</title>
+    <meta name="description" content="Play the Imposter game with friends! Find the secret agent among you in this fun group party game.">
+    
+    <link rel="stylesheet" href="../style.css">
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="apple-touch-icon" href="/favicon-32x32.png">
+
+    <style>
+        .setup-screen, .game-screen, .reveal-screen { display: none; }
+        .active { display: block; }
+        
+        .secret-box {
+            background: #1e293b;
+            padding: 40px 20px;
+            border-radius: 20px;
+            border: 3px solid var(--primary);
+            margin: 20px 0;
+            font-size: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .player-count {
+            font-size: 1.5rem;
+            margin: 10px;
+            display: inline-block;
+            width: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="../index.html" class="back">← Back</a>
+
+    <div class="card tool-card" style="text-align: center;">
+        <h1>🕵️ The Imposter</h1>
+
+        <div id="setup" class="setup-screen active">
+            <p>How many players?</p>
+            <button onclick="changePlayers(-1)">-</button>
+            <span id="playerDisplay" class="player-count">4</span>
+            <button onclick="changePlayers(1)">+</button>
+            <br><br>
+            <button class="copy-btn" onclick="startGame()">Start Game</button>
+        </div>
+
+        <div id="reveal" class="reveal-screen">
+            <p id="turnInfo">Player 1, it's your turn.</p>
+            <div class="secret-box" id="box" onclick="toggleSecret()">
+                CLICK TO REVEAL
+            </div>
+            <p id="hint">Keep it secret! Click again to hide before passing.</p>
+            <button id="nextBtn" class="copy-btn" onclick="nextPlayer()" style="display:none;">Next Player</button>
+        </div>
+
+        <div id="discuss" class="game-screen">
+            <h2>Time to Discuss!</h2>
+            <p>Everyone has seen their role. Take turns saying ONE word to describe the secret. Then, vote on who the Imposter is!</p>
+            <button class="copy-btn" onclick="resetGame()" style="background:#ef4444;">New Game</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const words = ["Eiffel Tower", "Pizza", "iPhone", "Netflix", "Elon Musk", "Starbucks", "TikTok", "Cinema", "Beach", "Sushi", "Bitcoin", "Batman"];
+    let playerCount = 4;
+    let imposterIndex;
+    let currentPlayer = 0;
+    let secretWord = "";
+    let showing = false;
+
+    function changePlayers(val) {
+        playerCount = Math.max(3, Math.min(12, playerCount + val));
+        document.getElementById('playerDisplay').innerText = playerCount;
+    }
+
+    function startGame() {
+        secretWord = words[Math.floor(Math.random() * words.length)];
+        imposterIndex = Math.floor(Math.random() * playerCount);
+        currentPlayer = 0;
+        showing = false;
+        
+        showScreen('reveal');
+        updateTurn();
+    }
+
+    function toggleSecret() {
+        const box = document.getElementById('box');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (!showing) {
+            box.innerText = (currentPlayer === imposterIndex) ? "YOU ARE THE IMPOSTER" : secretWord;
+            box.style.color = (currentPlayer === imposterIndex) ? "#ef4444" : "var(--primary)";
+            nextBtn.style.display = "block";
+            showing = true;
+        } else {
+            box.innerText = "CLICK TO REVEAL";
+            box.style.color = "white";
+            showing = false;
+        }
+    }
+
+    function nextPlayer() {
+        currentPlayer++;
+        if (currentPlayer < playerCount) {
+            updateTurn();
+            document.getElementById('nextBtn').style.display = "none";
+            document.getElementById('box').innerText = "CLICK TO REVEAL";
+            document.getElementById('box').style.color = "white";
+            showing = false;
+        } else {
+            showScreen('discuss');
+        }
+    }
+
+    function updateTurn() {
+        document.getElementById('turnInfo').innerText = `Player ${currentPlayer + 1}, your turn.`;
+    }
+
+    function showScreen(id) {
+        document.querySelectorAll('.setup-screen, .game-screen, .reveal-screen').forEach(s => s.classList.remove('active'));
+        document.getElementById(id).classList.add('active');
+    }
+
+    function resetGame() {
+        showScreen('setup');
+    }
+</script>
+
+</body>
+</html>
