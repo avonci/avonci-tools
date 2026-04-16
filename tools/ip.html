@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+
+    <meta charset="UTF-8">
+    <title>IP Checker – Find Your IP & Location | Avonci Tools</title>
+    <meta name="description" content="Check your IP address and find location details. Lookup any IP address instantly. Free online IP checker tool.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="index, follow">
+
+    <!-- SEO -->
+    <link rel="canonical" href="https://avonci.net/tools/ip">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/favicon.ico">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .ip-box {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 12px;
+            background: #1e293b;
+        }
+
+        .big-ip {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .lookup {
+            margin-top: 25px;
+        }
+
+        .lookup input {
+            width: 70%;
+        }
+
+        .lookup button {
+            width: 28%;
+        }
+
+        .row {
+            margin: 5px 0;
+        }
+
+        .copy-btn {
+            background: #22c55e;
+            margin-top: 10px;
+        }
+
+        .copy-btn:hover {
+            background: #16a34a;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <a href="/" class="back">← Back</a>
+
+    <h1>IP Checker</h1>
+
+    <!-- YOUR IP -->
+    <div class="tool-card ip-box">
+        <h3>Your IP</h3>
+
+        <div id="yourIP" class="big-ip">Loading...</div>
+
+        <div id="yourInfo"></div>
+
+        <button class="copy-btn" onclick="copyIP()">Copy IP</button>
+    </div>
+
+    <!-- LOOKUP -->
+    <div class="tool-card lookup">
+        <h3>Lookup IP</h3>
+
+        <input type="text" id="ipInput" placeholder="Enter IP (e.g. 8.8.8.8)">
+        <button onclick="lookupIP()">Check</button>
+
+        <div id="lookupResult" class="ip-box"></div>
+    </div>
+
+</div>
+
+<script>
+// ---------- Load user's IP ----------
+fetch("https://ipapi.co/json/")
+    .then(res => res.json())
+    .then(data => {
+        document.getElementById("yourIP").textContent = data.ip;
+
+        document.getElementById("yourInfo").innerHTML = `
+            <div class="row">📍 ${data.city}, ${data.country_name}</div>
+            <div class="row">🌐 ${data.org}</div>
+            <div class="row">🕒 ${data.timezone}</div>
+        `;
+    });
+
+// ---------- Lookup any IP ----------
+function lookupIP() {
+    const ip = document.getElementById("ipInput").value.trim();
+    const result = document.getElementById("lookupResult");
+
+    if (!ip) {
+        result.innerHTML = "Enter a valid IP address.";
+        return;
+    }
+
+    result.innerHTML = "Loading...";
+
+    fetch(`https://ipapi.co/${ip}/json/`)
+        .then(res => res.json())
+        .then(data => {
+            if (data.error) {
+                result.innerHTML = "Invalid IP address.";
+                return;
+            }
+
+            result.innerHTML = `
+                <div class="big-ip">${data.ip}</div>
+                <div class="row">📍 ${data.city}, ${data.country_name}</div>
+                <div class="row">🌐 ${data.org}</div>
+                <div class="row">🕒 ${data.timezone}</div>
+            `;
+        })
+        .catch(() => {
+            result.innerHTML = "Error fetching data.";
+        });
+}
+
+// ---------- Copy IP ----------
+function copyIP() {
+    const ip = document.getElementById("yourIP").textContent;
+    navigator.clipboard.writeText(ip);
+}
+</script>
+
+</body>
+</html>
