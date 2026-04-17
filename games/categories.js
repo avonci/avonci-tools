@@ -1,10 +1,20 @@
 const categories = [
     "Types of Pasta", "Rappers with 'Lil' in their name", "Brands of Shoes", 
-    "Excuses to get out of work", "Fast Food Chains", "European Countries",
-    "Things you shouldn't say at a funeral", "Body parts you have two of",
+    "Fast Food Chains", "European Countries", "Body parts you have two of",
     "Social Media Apps", "Characters in the MCU", "Common Phobias",
     "Brands of Beer", "Types of Drugs (Medical or not)", "Curse words in other languages",
-    "Reasons for a breakup", "Things found in a nightclub", "Items in a luxury hotel room"
+    "Sex toys", "Brands of condoms", "Tekmovalci kmetije 2026", "Things you've searched in Incognito mode",
+    "Pornstars", "Sex positions", "Things you shouldn't say to a pregnant woman", "Slang terms for being 'absolutely wasted'", 
+    "Conspiracy theories that actually make sense", "Inappropriate nicknames for your boss", "Ways to describe a 'zesty' person", 
+    "Pickup lines", "Places you've peed (besides a toilet)", "Items you'd use to wipe if there was no toilet paper",
+    "Things you'd do if you were invisible for exactly 1 hour", "Places to hide a dead body", "Ways to kill someone", "Car brands",
+    "Adult Site Names", "Cigarette Brands", "Hard Liquor Brands", "Famous Dictators", "Energy Drink Brands", "Gambling/Casino Games",
+    "Porn Categories", "Watch Brands", "Serial Killer Names", "Ways to Smuggle Contraband", "Body Fluids/Substances", "Kinks & Fetishes", 
+    "Places to have a 'Quickie'", "Melee Weapon Types", "Cryptocurrency Coins", "Billionaires", "Bruno Mars songs", 
+    "Methods of 'Safe Sex'", "Terrorist Groups", "Ways to Cheat on a Test", "Reasons to Fire Someone Immediately", 
+    "Body Parts People have Pierced", "Methods of Torture", "Atractive body parts", "What gives you a boner", 
+    "Things People do when Home Alone", "Rich people hobbies"
+    
 ];
 
 let timeLeft = 60;
