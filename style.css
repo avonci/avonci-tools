@@ -193,6 +193,31 @@ button:active {
     font-size: 0.85rem;
 }
 
+.footer-content p {
+    color: var(--muted);
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.donate-btn {
+    display: inline-block;
+    background: rgba(255, 255, 255, 0.05); /* Subtle glass look */
+    border: 1px solid var(--primary);
+    color: var(--primary);
+    padding: 8px 16px;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: all 0.3s ease;
+}
+
+.donate-btn:hover {
+    background: var(--primary);
+    color: #000; /* Contrast against the primary color */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 136, 0.3); /* Glow effect */
+}
+
 /* Mobile Tweaks */
 @media (max-width: 600px) {
     h1 { font-size: 1.8rem; }
