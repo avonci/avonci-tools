@@ -19,7 +19,7 @@ const categories = [
     "Worst first date ideas", "Things you’d do if there were no consequences", "5-letter words", "Musical instruments", 
     "Ways to spend €1,000,000 fast", "Worst superpowers", "Things you’d do if you swapped genders for a day", "Laptop brands",
     "Streaming platforms", "Banks", "Game consoles", "US states", "Cocktails", "Things at a gym", "Things on a desk",
-    "Things in a car", "Things that smell bad", "Things that are overpriced", "Things that are addictive", "", "", "", "", "", "", "", "", "", "", ""
+    "Things in a car", "Things that smell bad", "Things that are overpriced", "Things that are addictive"
     
 ];
 
