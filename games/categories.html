@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="../style.css">
+    <style>
+        .timer { font-size: 4rem; font-weight: bold; color: var(--primary); margin: 20px 0; }
+        .category-display { font-size: 2rem; min-height: 80px; margin-bottom: 20px; color: #fff; }
+        .game-controls { display: flex; flex-direction: column; gap: 10px; }
+        .bid-count { font-size: 1.5rem; color: var(--muted); }
+    </style>
+</head>
+<body>
+<div class="container">
+    <a href="../index.html" class="back">← Back</a>
+    <h1>Categories: The Bet</h1>
+
+    <div class="card tool-card" id="setup-screen">
+        <p>Two players/teams. Bid how many items you can name. If the other person thinks you'll fail, they say "PROVE IT!"</p>
+        <button onclick="nextCategory()">Get New Category</button>
+    </div>
+
+    <div class="card tool-card" id="game-screen" style="display:none;">
+        <div id="category-text" class="category-display">Loading...</div>
+        
+        <div id="bid-section">
+            <p>Make your bids! When ready to start:</p>
+            <button onclick="startTimer()">PROVE IT!</button>
+        </div>
+
+        <div id="timer-section" style="display:none;">
+            <div id="timer" class="timer">60</div>
+            <p>Count out loud!</p>
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+                <button onclick="endGame(true)" style="background: #22c55e;">SUCCESS</button>
+                <button onclick="endGame(false)" style="background: #ef4444;">FAILED</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="categories.js"></script>
+</body>
+</html>
