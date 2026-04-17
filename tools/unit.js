@@ -40,6 +40,39 @@ const unitData = {
             'Kelvin (K)': 'K'
         }
     }
+    volume: {
+        base: 'l',
+        units: {
+            'Milliliters (ml)': 0.001,
+            'Liters (l)': 1,
+            'Cups (cup)': 0.236588,
+            'Tablespoons (tbsp)': 0.0147868,
+            'Teaspoons (tsp)': 0.00492892,
+            'Gallons (gal)': 3.78541,
+            'Fluid Ounces (fl-oz)': 0.0295735
+        }
+    },
+    speed: {
+        base: 'km/h',
+        units: {
+            'Kilometers/h (km/h)': 1,
+            'Miles/h (mph)': 1.60934,
+            'Meters/s (m/s)': 3.6,
+            'Knots (kn)': 1.852,
+            'Mach (mach)': 1234.8
+        }
+    },
+    area: {
+        base: 'sqm',
+        units: {
+            'Square Meters (m²)': 1,
+            'Square Kilometers (km²)': 1000000,
+            'Square Feet (ft²)': 0.092903,
+            'Square Inches (in²)': 0.00064516,
+            'Acres (ac)': 4046.86,
+            'Hectares (ha)': 10000
+        }
+    }
 };
 
 function updateUnits() {
