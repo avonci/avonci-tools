@@ -21,7 +21,7 @@ function generate() {
     const nounExplicit = [
         "nigger", "fucker", "nigga", "retard", "jew", "fuck", "cunt", "digga", "nazi", "dick", 
         "balls", "faggot", "gayboy", "ladyboy", "šilček", "titties", "asscrack", "dildo", 
-        "motherfucker", "loverboy", "newborn", "fatass", "bitch", "addict", "alcoholic", 
+        "motherfucker", "loverboy", "fatass", "bitch", "addict", "alcoholic", 
         "muslim", "terrorist", "boner"
     ];
 
