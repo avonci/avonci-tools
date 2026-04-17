@@ -13,7 +13,13 @@ const categories = [
     "Places to have a 'Quickie'", "Melee Weapon Types", "Cryptocurrency Coins", "Billionaires", "Bruno Mars songs", 
     "Methods of 'Safe Sex'", "Terrorist Groups", "Ways to Cheat on a Test", "Reasons to Fire Someone Immediately", 
     "Body Parts People have Pierced", "Methods of Torture", "Atractive body parts", "What gives you a boner", 
-    "Things People do when Home Alone", "Rich people hobbies"
+    "Things People do when Home Alone", "Rich people hobbies", "Comedie movies", "Christmas movies", "TV series",
+    "Countries in Africa", "Elements from the periodic table", "Programming languages", "Types of sharks", "Greek gods",
+    "Horror movies", "Pokémon", "YouTubers", "Ice cream flavors", "Things in a backpack", "School subjects", "Things you’d do for €10",
+    "Worst first date ideas", "Things you’d do if there were no consequences", "5-letter words", "Musical instruments", 
+    "Ways to spend €1,000,000 fast", "Worst superpowers", "Things you’d do if you swapped genders for a day", "Laptop brands",
+    "Streaming platforms", "Banks", "Game consoles", "US states", "Cocktails", "Things at a gym", "Things on a desk",
+    "Things in a car", "Things that smell bad", "Things that are overpriced", "Things that are addictive", "", "", "", "", "", "", "", "", "", "", ""
     
 ];
 
