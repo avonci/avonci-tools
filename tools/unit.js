@@ -39,7 +39,7 @@ const unitData = {
             'Fahrenheit (°F)': 'F',
             'Kelvin (K)': 'K'
         }
-    }
+    },
     volume: {
         base: 'l',
         units: {
