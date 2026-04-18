@@ -94,18 +94,28 @@
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            backface-visibility: hidden;
+            /* FIX 1: This prevents the 'see-through' effect */
+            backface-visibility: hidden; 
+            -webkit-backface-visibility: hidden;
+            
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: 800;
-            border: 3px solid var(--primary);
-            background: var(--card-bg);
+            border: 2px solid var(--primary);
+            
+            /* FIX 2: Use a solid color instead of rgba to ensure it's opaque */
+            background: #0b1121; 
             color: var(--text);
             box-shadow: 0 0 20px var(--primary-glow);
         }
-
-        .coin-back { transform: rotateY(180deg); color: var(--primary); }
+        
+        .coin-back { 
+            transform: rotateY(180deg); 
+            color: var(--primary); 
+            /* Ensures the back side also has a solid background */
+            background: #0b1121; 
+        }
 
         /* Custom tab styling using your variables */
         .tab-container {
@@ -173,16 +183,7 @@
             </div>
             <button onclick="flipCoin()">Flip Coin</button>
         </div>
-
-        <div id="statusText">Ready</div>
     </div>
-
-    <footer>
-        <div class="footer-content">
-            <p>© 2026 Avonci Tools. All rights reserved.</p>
-            <a href="#" class="donate-btn">Donate to Support</a>
-        </div>
-    </footer>
 </div>
 
 <script>
@@ -196,7 +197,6 @@
         document.getElementById('coinScene').style.display = mode === 'coin' ? 'block' : 'none';
         document.getElementById('diceTab').classList.toggle('active', mode === 'dice');
         document.getElementById('coinTab').classList.toggle('active', mode === 'coin');
-        document.getElementById('statusText').innerText = "Ready";
     }
 
     function rollDice() {
@@ -219,11 +219,6 @@
         const dice = document.getElementById('dice');
         
         dice.style.transform = `rotateX(${xRotation + target.x}deg) rotateY(${yRotation + target.y}deg)`;
-        
-        document.getElementById('statusText').innerText = "Rolling...";
-        setTimeout(() => { 
-            document.getElementById('statusText').innerText = "Result: " + result; 
-        }, 1500);
     }
 
     function flipCoin() {
@@ -233,11 +228,6 @@
         
         const coin = document.getElementById('coin');
         coin.style.transform = `rotateY(${coinRotation}deg)`;
-        
-        document.getElementById('statusText').innerText = "Flipping...";
-        setTimeout(() => {
-            document.getElementById('statusText').innerText = "Result: " + (isHeads ? "HEADS" : "TAILS");
-        }, 1500);
     }
 </script>
 
