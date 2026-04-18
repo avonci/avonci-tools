@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avonci | Roll & Flip</title>
+    <meta name="description" content="High-performance 3D dice roller and coin flipper for the Avonci utility suite.">
+    <link rel="canonical" href="https://avonci.net/games/dice">
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+  
+    <style>
+        :root {
+            --primary: #ff3131; /* Your Neon Red */
+            --bg: #0a0a0b;
+            --card: #121214;
+            --border: #2a2a2e;
+            --text: #ffffff;
+            --radius: 12px;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+        }
+
+        .tool-card {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 40px 20px;
+            border-radius: var(--radius);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        h1 { margin-bottom: 5px; font-size: 28px; }
+        p.subtitle { color: #888; margin-bottom: 30px; font-size: 14px; }
+
+        /* --- 3D DICE SYSTEM --- */
+        .scene-dice {
+            width: 100px;
+            height: 100px;
+            perspective: 600px;
+            margin: 40px auto;
+        }
+
+        .dice {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+
+        .dice-face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border: 2px solid var(--primary);
+            background: rgba(255, 49, 49, 0.05);
+            display: grid;
+            grid-template: repeat(3, 1fr) / repeat(3, 1fr);
+            padding: 15px;
+            box-sizing: border-box;
+            border-radius: 12px;
+            box-shadow: inset 0 0 15px rgba(255, 49, 49, 0.2);
+        }
+
+        .dot { width: 12px; height: 12px; background: white; border-radius: 50%; align-self: center; justify-self: center; box-shadow: 0 0 5px white; }
+
+        /* Positioning Faces */
+        .face-1 { transform: rotateY(0deg) translateZ(50px); }
+        .face-2 { transform: rotateY(90deg) translateZ(50px); }
+        .face-3 { transform: rotateY(180deg) translateZ(50px); }
+        .face-4 { transform: rotateY(-90deg) translateZ(50px); }
+        .face-5 { transform: rotateX(90deg) translateZ(50px); }
+        .face-6 { transform: rotateX(-90deg) translateZ(50px); }
+
+        /* --- 3D COIN SYSTEM --- */
+        .scene-coin {
+            width: 120px;
+            height: 120px;
+            perspective: 1000px;
+            margin: 40px auto;
+            display: none; /* Hidden by default */
+        }
+
+        .coin {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 1.5s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+        }
+
+        .coin-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            backface-visibility: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 20px;
+            border: 4px solid #ffd700;
+            background: linear-gradient(45deg, #b8860b, #ffd700);
+            color: #5d4405;
+            box-shadow: 0 0 20px rgba(218, 165, 32, 0.4);
+        }
+
+        .coin-back { transform: rotateY(180deg); background: linear-gradient(45deg, #ffd700, #b8860b); }
+
+        /* Controls */
+        .btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+            margin: 5px;
+        }
+
+        .btn:hover { filter: brightness(1.2); transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 1px solid var(--border); color: #888; }
+        .btn-active { border-color: var(--primary); color: white; }
+
+        #result { margin-top: 20px; font-weight: bold; color: var(--primary); height: 24px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="tool-card">
+        <h1>Roll & Flip</h1>
+        <p class="subtitle">Physics-based randomization for the Avonci suite.</p>
+
+        <div style="margin-bottom: 20px;">
+            <button id="tab-dice" class="btn btn-outline btn-active">Dice</button>
+            <button id="tab-coin" class="btn btn-outline">Coin</button>
+        </div>
+
+        <div id="dice-area">
+            <div class="scene-dice">
+                <div class="dice" id="dice">
+                    <div class="dice-face face-1"><span class="dot" style="grid-area: 2/2;"></span></div>
+                    <div class="dice-face face-2"><span class="dot" style="grid-area: 1/1;"></span><span class="dot" style="grid-area: 3/3;"></span></div>
+                    <div class="dice-face face-3"><span class="dot" style="grid-area: 1/1;"></span><span class="dot" style="grid-area: 2/2;"></span><span class="dot" style="grid-area: 3/3;"></span></div>
+                    <div class="dice-face face-4"><span class="dot" style="grid-area: 1/1;"></span><span class="dot" style="grid-area: 1/3;"></span><span class="dot" style="grid-area: 3/1;"></span><span class="dot" style="grid-area: 3/3;"></span></div>
+                    <div class="dice-face face-5"><span class="dot" style="grid-area: 1/1;"></span><span class="dot" style="grid-area: 1/3;"></span><span class="dot" style="grid-area: 2/2;"></span><span class="dot" style="grid-area: 3/1;"></span><span class="dot" style="grid-area: 3/3;"></span></div>
+                    <div class="dice-face face-6"><span class="dot" style="grid-area: 1/1;"></span><span class="dot" style="grid-area: 1/3;"></span><span class="dot" style="grid-area: 2/1;"></span><span class="dot" style="grid-area: 2/3;"></span><span class="dot" style="grid-area: 3/1;"></span><span class="dot" style="grid-area: 3/3;"></span></div>
+                </div>
+            </div>
+            <button class="btn" onclick="rollDice()">Roll Dice</button>
+        </div>
+
+        <div id="coin-area" style="display: none;">
+            <div class="scene-coin">
+                <div class="coin" id="coin">
+                    <div class="coin-face coin-front">HEADS</div>
+                    <div class="coin-face coin-back">TAILS</div>
+                </div>
+            </div>
+            <button class="btn" onclick="flipCoin()">Flip Coin</button>
+        </div>
+
+        <p id="resultText">Ready to roll...</p>
+    </div>
+</div>
+
+<script>
+    const dice = document.getElementById('dice');
+    const coin = document.getElementById('coin');
+    const resultText = document.getElementById('resultText');
+
+    // Tab Switching
+    document.getElementById('tab-dice').onclick = function() {
+        toggleTab('dice');
+    };
+    document.getElementById('tab-coin').onclick = function() {
+        toggleTab('coin');
+    };
+
+    function toggleTab(type) {
+        document.getElementById('dice-area').style.display = type === 'dice' ? 'block' : 'none';
+        document.getElementById('coin-area').style.display = type === 'coin' ? 'block' : 'none';
+        document.querySelector('.scene-coin').style.display = type === 'coin' ? 'block' : 'none';
+        document.getElementById('tab-dice').classList.toggle('btn-active', type === 'dice');
+        document.getElementById('tab-coin').classList.toggle('btn-active', type === 'coin');
+        resultText.innerText = "Ready to " + (type === 'dice' ? "roll..." : "flip...");
+    }
+
+    // Dice Logic
+    function rollDice() {
+        const result = Math.floor(Math.random() * 6) + 1;
+        // Adding extra rotations for a "tumbling" effect
+        const xRot = Math.floor(Math.random() * 4) * 90 + 720; 
+        const yRot = Math.floor(Math.random() * 4) * 90 + 720;
+
+        // Final positions to land on a specific number
+        const targets = {
+            1: "rotateX(0deg) rotateY(0deg)",
+            2: "rotateX(0deg) rotateY(-90deg)",
+            3: "rotateX(0deg) rotateY(-180deg)",
+            4: "rotateX(0deg) rotateY(90deg)",
+            5: "rotateX(-90deg) rotateY(0deg)",
+            6: "rotateX(90deg) rotateY(0deg)"
+        };
+
+        dice.style.transform = `rotateX(${xRot}deg) rotateY(${yRot}deg) ${targets[result]}`;
+        resultText.innerText = "Rolling...";
+        setTimeout(() => { resultText.innerText = "Result: " + result; }, 1500);
+    }
+
+    // Coin Logic
+    let coinFlipped = false;
+    function flipCoin() {
+        const isHeads = Math.random() < 0.5;
+        const extraSpins = 1440; // 4 full rotations
+        const finalRotation = isHeads ? extraSpins : extraSpins + 180;
+        
+        coin.style.transform = `rotateY(${finalRotation}deg)`;
+        resultText.innerText = "Flipping...";
+        
+        // Reset rotation occasionally to prevent infinite numbers
+        setTimeout(() => {
+            resultText.innerText = "Result: " + (isHeads ? "HEADS" : "TAILS");
+        }, 1500);
+    }
+</script>
+
+</body>
+</html>
