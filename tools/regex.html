@@ -1,230 +1,111 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Regex Tester | Avonci Tools</title>
-    <meta name="description" content="Professional live regex tester and debugger. Test regular expressions with real-time highlighting and flag support.">
-    <meta name="keywords" content="regex tester, regular expression, javascript regex, online regex debugger, avonci tools">
-    <link rel="canonical" href="https://avonci.net/regex">
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+    
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+    
+    <meta charset="UTF-8">
+    <title>Regex Tester – Test Regular Expressions | Avonci Tools</title>
+    <meta name="description" content="Test and debug regular expressions online with live matching and highlighting. Free regex tester.">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <link rel="icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="canonical" href="https://avonci.net/tools/regex">
+    <link rel="stylesheet" href="../style.css">
 
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-KGWK2G7HZ2');
-    </script>
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
-    <link rel="stylesheet" href="../style.css">
+    <style>
+        textarea, input {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: none;
+        }
 
-    <style>
-        .tool-card {
-            align-items: stretch !important; /* Overrides the 'center' patch */
-            text-align: left !important;    /* Overrides the 'center' patch */
-        }
-        
-        /* 2. SYNC THE EDITOR */
-        .regex-editor {
-            position: relative;
-            width: 100%;
-            height: 250px;
-            margin: 15px 0;
-            background: rgba(15, 23, 42, 0.6);
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            overflow: hidden;
-            /* Ensure the container doesn't try to center its children */
-            display: block !important; 
-        }
-        
-        #textInput, #highlightLayer {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            padding: 16px !important; /* Force identical padding */
-            margin: 0 !important;
-            
-            /* SYNC THE FONTS (Crucial for the cursor height) */
-            font-family: 'Fira Code', monospace !important;
-            font-size: 16px !important;
-            line-height: 1.5 !important; /* Fixed line height overrides body 1.6 */
-            
-            white-space: pre-wrap !important;
-            word-wrap: break-word !important;
-            text-align: left !important;
-            border: none !important;
-            outline: none !important;
-            background: transparent !important;
-            box-sizing: border-box !important;
-        }
-        
-        #textInput {
-            color: transparent !important;
-            caret-color: var(--text) !important;
-            z-index: 2;
-            resize: none;
-            /* Stop the browser from adding extra margin/padding */
-            appearance: none;
-            -webkit-appearance: none;
-        }
-        
-        #highlightLayer {
-            color: var(--text);
-            z-index: 1;
-            pointer-events: none;
-            overflow-y: auto;
-            /* Hide scrollbar but keep functionality so it matches the textarea */
-            scrollbar-width: none; 
-        }
-        #highlightLayer::-webkit-scrollbar { display: none; }
+        .output {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+        }
 
-        .highlight {
-            background: rgba(56, 189, 248, 0.3);
-            border-bottom: 2px solid var(--primary);
-            border-radius: 2px;
-        }
-        
-        .flag-container {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-        
-        .flag-label {
-            font-size: 0.85rem;
-            color: var(--muted);
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-        
-        .match-counter {
-            margin-top: 10px;
-            font-weight: bold;
-        }
-        
-        .cheat-sheet {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-            padding: 15px;
-            background: var(--card-bg);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
-        
-        .cheat-item { font-size: 0.8rem; color: var(--muted); }
-        .cheat-item code { color: var(--primary); }
-        
-    </style>
+        .highlight {
+            background: #3b82f6;
+            color: white;
+            border-radius: 4px;
+            padding: 2px;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
-    <a href="../index.html" class="back">← Back</a>
 
-    <div class="tool-card">
-        <h1>Regex Tester</h1>
-        <p>Live expression debugging with visual highlighting.</p>
+    <a href="../index.html" class="back">← Back</a>
 
-        <input type="text" id="pattern" placeholder="Enter pattern (e.g. [a-z0-9]+)" autocomplete="off">
+    <h1>Regex Tester</h1>
 
-        <div class="flag-container">
-            <label class="flag-label"><input type="checkbox" id="flagG" checked> Global (g)</label>
-            <label class="flag-label"><input type="checkbox" id="flagI"> Ignore Case (i)</label>
-            <label class="flag-label"><input type="checkbox" id="flagM"> Multiline (m)</label>
-        </div>
+    <input type="text" id="pattern" placeholder="Enter regex pattern (e.g. \\d+)">
 
-        <div class="regex-editor">
-            <div id="highlightLayer"></div>
-            <textarea id="textInput" placeholder="Enter text to test..." onscroll="syncScroll()" oninput="update()"></textarea>
-        </div>
+    <textarea id="text" rows="6" placeholder="Enter text to test..."></textarea>
 
-        <div id="matchCount" class="match-counter">Matches: 0</div>
+    <div id="result" class="output"></div>
 
-        <div class="cheat-sheet">
-            <div class="cheat-item"><code>\d</code> Digit</div>
-            <div class="cheat-item"><code>\w</code> Word char</div>
-            <div class="cheat-item"><code>[a-z]</code> Range</div>
-            <div class="cheat-item"><code>+</code> 1 or more</div>
-            <div class="cheat-item"><code>*</code> 0 or more</div>
-            <div class="cheat-item"><code>^</code> Start</div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-content">
-            <p>© 2026 Avonci Tools. All rights reserved.</p>
-        </div>
-    </footer>
 </div>
 
 <script>
-    const patternInput = document.getElementById("pattern");
-    const textInput = document.getElementById("textInput");
-    const highlightLayer = document.getElementById("highlightLayer");
-    const matchCountDisplay = document.getElementById("matchCount");
+const patternInput = document.getElementById("pattern");
+const textInput = document.getElementById("text");
+const resultDiv = document.getElementById("result");
 
-    function syncScroll() {
-        highlightLayer.scrollTop = textInput.scrollTop;
-    }
+function escapeHTML(str) {
+    return str.replace(/[&<>"']/g, m => ({
+        '&': '&amp;',
+        '<': '&lt;',
+        '>': '&gt;',
+        '"': '&quot;',
+        "'": '&#39;'
+    })[m]);
+}
 
-    function escapeHTML(str) {
-        return str.replace(/[&<>"']/g, m => ({
-            '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-        })[m]);
-    }
+function update() {
+    const pattern = patternInput.value;
+    const text = textInput.value;
 
-    function update() {
-        const pattern = patternInput.value;
-        const text = textInput.value;
-        
-        if (!pattern || !text) {
-            highlightLayer.innerHTML = escapeHTML(text);
-            matchCountDisplay.innerText = "Matches: 0";
-            return;
-        }
+    if (!pattern) {
+        resultDiv.innerHTML = escapeHTML(text);
+        return;
+    }
 
-        try {
-            let flags = "";
-            if (document.getElementById("flagG").checked) flags += "g";
-            if (document.getElementById("flagI").checked) flags += "i";
-            if (document.getElementById("flagM").checked) flags += "m";
+    try {
+        const regex = new RegExp(pattern, 'g');
+        let matchCount = 0;
 
-            const regex = new RegExp(pattern, flags);
-            let matchCount = 0;
+        const highlighted = escapeHTML(text).replace(regex, match => {
+            matchCount++;
+            return `<span class="highlight">${match}</span>`;
+        });
 
-            const highlighted = text.replace(regex, (match) => {
-                matchCount++;
-                return `###MATCH###${match}###END###`;
-            });
+        resultDiv.innerHTML = highlighted + `<br><br>Matches: ${matchCount}`;
+    } catch (e) {
+        resultDiv.innerHTML = "Invalid regex pattern";
+    }
+}
 
-            const finalHTML = escapeHTML(highlighted)
-                .replace(/###MATCH###/g, '<span class="highlight">')
-                .replace(/###END###/g, '</span>');
-
-            highlightLayer.innerHTML = finalHTML + "\n";
-            matchCountDisplay.innerText = `Matches: ${matchCount}`;
-            matchCountDisplay.style.color = "var(--primary)";
-        } catch (e) {
-            highlightLayer.innerHTML = escapeHTML(text);
-            matchCountDisplay.innerText = "Invalid Regex Pattern";
-            matchCountDisplay.style.color = "#ff4444";
-        }
-    }
-
-    patternInput.addEventListener("input", update);
-    document.querySelectorAll('.flag-label input').forEach(cb => cb.addEventListener('change', update));
+patternInput.addEventListener("input", update);
+textInput.addEventListener("input", update);
 </script>
 
 </body>
