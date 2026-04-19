@@ -73,4 +73,8 @@
     <loc>https://avonci.net/games/categories</loc>
     <priority>0.8</priority>
   </url>
+  <url>
+    <loc>https://avonci.net/games/dice</loc>
+    <priority>0.8</priority>
+  </url>
 </urlset>
