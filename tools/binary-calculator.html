@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Binary & Base Calculator | Avonci Tools</title>
+    <meta name="description" content="Advanced binary calculator and base converter. Easily switch between Binary, Decimal, and Hexadecimal with real-time results.">
+    <meta name="keywords" content="binary calculator, hex to binary, decimal to binary, base converter, avonci tools, hex calculator">
+    <link rel="canonical" href="https://avonci.net/binary-calculator">
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+
+    <link rel="stylesheet" href="../style.css">
+
+    <style>
+        .calc-display {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: right;
+            min-height: 100px;
+            word-break: break-all;
+        }
+
+        .result-label { color: var(--primary); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 5px; }
+        .result-value { font-size: 1.5rem; font-weight: 700; color: var(--text); }
+        .decimal-hint { color: var(--muted); font-size: 0.9rem; margin-top: 5px; }
+
+        .op-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 15px; }
+        .op-btn { background: var(--card-bg); border: 1px solid var(--border); color: var(--primary); }
+        .op-btn.active { background: var(--primary); color: #020617; }
+
+        .mode-toggle {
+            margin-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 15px;
+        }
+
+        h2.section-title { font-size: 0.9rem; margin-bottom: 10px; text-align: left; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="index.html" class="back">← Back</a>
+    
+    <div class="tool-card">
+        <h1>Base Engine</h1>
+        <p>Calculate and convert between Binary, Decimal, and Hex.</p>
+
+        <div class="calc-display">
+            <div class="result-label" id="resLabel">Result</div>
+            <div id="mainResult" class="result-value">0</div>
+            <div id="secondaryResult" class="decimal-hint">Decimal: 0</div>
+        </div>
+
+        <select id="toolMode" onchange="toggleMode()">
+            <option value="calc">Binary Calculator (+ - * /)</option>
+            <option value="conv">Base Converter (Dec/Bin/Hex)</option>
+        </select>
+
+        <div id="calcUI">
+            <input type="text" id="bin1" placeholder="First Binary" oninput="valBin(this)">
+            <div class="op-grid">
+                <button class="op-btn active" onclick="setOp('+', this)">+</button>
+                <button class="op-btn" onclick="setOp('-', this)">-</button>
+                <button class="op-btn" onclick="setOp('*', this)">×</button>
+                <button class="op-btn" onclick="setOp('/', this)">÷</button>
+            </div>
+            <input type="text" id="bin2" placeholder="Second Binary" oninput="valBin(this)">
+            <button onclick="doMath()">Calculate</button>
+        </div>
+
+        <div id="convUI" style="display:none;">
+            <select id="convType" onchange="clearConv()">
+                <option value="dec2bin">Decimal to Binary</option>
+                <option value="bin2dec">Binary to Decimal</option>
+                <option value="hex2bin">Hex to Binary</option>
+                <option value="bin2hex">Binary to Hex</option>
+                <option value="dec2hex">Decimal to Hex</option>
+                <option value="hex2dec">Hex to Decimal</option>
+            </select>
+            <input type="text" id="convInput" placeholder="Enter value..." oninput="valConv(this)">
+            <button onclick="doConvert()">Convert</button>
+        </div>
+
+        <button class="donate-btn" style="margin-top: 20px; background: transparent; width: 100%;" onclick="resetAll()">Reset Tool</button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 Avonci Tools. All rights reserved.</p>
+            <a href="#" class="donate-btn">Donate to Support</a>
+        </div>
+    </footer>
+</div>
+
+<script>
+    let currentOp = '+';
+
+    function toggleMode() {
+        const mode = document.getElementById('toolMode').value;
+        document.getElementById('calcUI').style.display = mode === 'calc' ? 'block' : 'none';
+        document.getElementById('convUI').style.display = mode === 'conv' ? 'block' : 'none';
+        resetAll();
+    }
+
+    // Validation Logic
+    function valBin(el) { el.value = el.value.replace(/[^01]/g, ''); }
+    function valConv(el) {
+        const type = document.getElementById('convType').value;
+        if (type.includes('bin')) el.value = el.value.replace(/[^01]/g, '');
+        if (type.includes('dec')) el.value = el.value.replace(/[^0-9]/g, '');
+        if (type.includes('hex')) el.value = el.value.toUpperCase().replace(/[^0-9A-F]/g, '');
+    }
+
+    function setOp(op, btn) {
+        currentOp = op;
+        document.querySelectorAll('.op-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+
+    function doMath() {
+        const b1 = document.getElementById('bin1').value;
+        const b2 = document.getElementById('bin2').value;
+        if(!b1 || !b2) return;
+        
+        const d1 = parseInt(b1, 2);
+        const d2 = parseInt(b2, 2);
+        let res = 0;
+
+        if (currentOp === '+') res = d1 + d2;
+        if (currentOp === '-') res = d1 - d2;
+        if (currentOp === '*') res = d1 * d2;
+        if (currentOp === '/') res = d2 !== 0 ? Math.floor(d1 / d2) : 0;
+
+        document.getElementById('resLabel').innerText = "Result (Binary)";
+        document.getElementById('mainResult').innerText = (res >>> 0).toString(2);
+        document.getElementById('secondaryResult').innerText = `Decimal: ${res} | Hex: ${res.toString(16).toUpperCase()}`;
+    }
+
+    function doConvert() {
+        const val = document.getElementById('convInput').value;
+        if(!val) return;
+        const type = document.getElementById('convType').value;
+        let dec, out, label;
+
+        // Step 1: To Decimal
+        if (type.startsWith('bin')) dec = parseInt(val, 2);
+        else if (type.startsWith('hex')) dec = parseInt(val, 16);
+        else dec = parseInt(val, 10);
+
+        // Step 2: To Target
+        if (type.endsWith('bin')) { out = dec.toString(2); label = "Binary"; }
+        else if (type.endsWith('hex')) { out = dec.toString(16).toUpperCase(); label = "Hexadecimal"; }
+        else { out = dec.toString(10); label = "Decimal"; }
+
+        document.getElementById('resLabel').innerText = `Result (${label})`;
+        document.getElementById('mainResult').innerText = out;
+        document.getElementById('secondaryResult').innerText = `Full Trace: Dec: ${dec} | Bin: ${dec.toString(2)} | Hex: ${dec.toString(16).toUpperCase()}`;
+    }
+
+    function resetAll() {
+        document.querySelectorAll('input').forEach(i => i.value = '');
+        document.getElementById('mainResult').innerText = '0';
+        document.getElementById('secondaryResult').innerText = 'Decimal: 0';
+    }
+
+    function clearConv() {
+        document.getElementById('convInput').value = '';
+    }
+</script>
+
+</body>
+</html>
