@@ -54,7 +54,7 @@
 <body>
 
 <div class="container">
-    <a href="index.html" class="back">← Back</a>
+    <a href="/index.html" class="back">← Back</a>
     
     <div class="tool-card">
         <h1>Base Engine</h1>
@@ -121,9 +121,15 @@
     function valBin(el) { el.value = el.value.replace(/[^01]/g, ''); }
     function valConv(el) {
         const type = document.getElementById('convType').value;
-        if (type.includes('bin')) el.value = el.value.replace(/[^01]/g, '');
-        if (type.includes('dec')) el.value = el.value.replace(/[^0-9]/g, '');
-        if (type.includes('hex')) el.value = el.value.toUpperCase().replace(/[^0-9A-F]/g, '');
+        if (type.startsWith('bin')) {
+            el.value = el.value.replace(/[^01]/g, '');
+        } 
+        else if (type.startsWith('dec')) {
+            el.value = el.value.replace(/[^0-9]/g, '');
+        } 
+        else if (type.startsWith('hex')) {
+            el.value = el.value.toUpperCase().replace(/[^0-9A-F]/g, '');
+        }
     }
 
     function setOp(op, btn) {
@@ -156,20 +162,20 @@
         if(!val) return;
         const type = document.getElementById('convType').value;
         let dec, out, label;
-
-        // Step 1: To Decimal
+    
         if (type.startsWith('bin')) dec = parseInt(val, 2);
         else if (type.startsWith('hex')) dec = parseInt(val, 16);
         else dec = parseInt(val, 10);
-
-        // Step 2: To Target
+    
+        if (isNaN(dec)) return;
+    
         if (type.endsWith('bin')) { out = dec.toString(2); label = "Binary"; }
         else if (type.endsWith('hex')) { out = dec.toString(16).toUpperCase(); label = "Hexadecimal"; }
         else { out = dec.toString(10); label = "Decimal"; }
-
+    
         document.getElementById('resLabel').innerText = `Result (${label})`;
         document.getElementById('mainResult').innerText = out;
-        document.getElementById('secondaryResult').innerText = `Full Trace: Dec: ${dec} | Bin: ${dec.toString(2)} | Hex: ${dec.toString(16).toUpperCase()}`;
+        document.getElementById('secondaryResult').innerText = `Dec: ${dec} | Bin: ${dec.toString(2)} | Hex: ${dec.toString(16).toUpperCase()}`;
     }
 
     function resetAll() {
