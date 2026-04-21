@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KGWK2G7HZ2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-KGWK2G7HZ2');
+    </script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Investment Calculator – Compound Interest Tool | Avonci Tools</title>
+    <meta name="description" content="Calculate your future wealth with our free compound interest calculator. Factor in monthly contributions and see your money grow over time.">
+    <meta name="robots" content="index, follow">
+    <meta name="keywords" content="investment calculator, compound interest, savings calculator, wealth planner, avonci tools">
+
+    <meta property="og:title" content="Investment Calculator – Compound Interest Tool">
+    <meta property="og:description" content="Plan your financial future with the Avonci Investment Calculator.">
+    <meta property="og:url" content="https://avonci.net/tools/investment">
+    <meta property="og:type" content="website">
+    <link rel="canonical" href="https://avonci.net/tools/investment">
+
+    <link rel="stylesheet" href="../style.css">
+
+    <link rel="icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+
+    <style>
+        .result-display {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 25px;
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .total-amount {
+            font-size: 2.5rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin: 10px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .stat-item {
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 10px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--muted);
+            letter-spacing: 0.05em;
+        }
+
+        .stat-value {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text);
+            margin-top: 5px;
+        }
+
+        .input-group {
+            text-align: left;
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .tool-card {
+            max-width: 600px !important;
+            align-items: stretch !important;
+            text-align: left !important;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <a href="../index.html" class="back">← Back</a>
+
+    <div class="tool-card">
+        <h1>Investment Calculator</h1>
+        <p>Watch your wealth grow through the power of compounding.</p>
+
+        <div class="result-display">
+            <div class="stat-label">Estimated Future Balance</div>
+            <div id="totalBalance" class="total-amount">$0.00</div>
+            
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-label">Total Contributions</div>
+                    <div id="totalDeposits" class="stat-value">$0.00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Interest Earned</div>
+                    <div id="totalInterest" class="stat-value">$0.00</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label>Starting Amount ($)</label>
+            <input type="number" id="principal" value="1000" oninput="calculate()">
+        </div>
+
+        <div class="input-group">
+            <label>Monthly Contribution ($)</label>
+            <input type="number" id="monthly" value="100" oninput="calculate()">
+        </div>
+
+        <div class="input-group">
+            <label>Annual Interest Rate (%)</label>
+            <input type="number" id="rate" value="7" step="0.1" oninput="calculate()">
+        </div>
+
+        <div class="input-group">
+            <label>Years to Invest</label>
+            <input type="number" id="years" value="10" oninput="calculate()">
+        </div>
+
+        <button onclick="calculate()" style="margin-top: 10px;">Refresh Calculation</button>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <p>© 2026 Avonci Tools. All rights reserved.</p>
+        </div>
+    </footer>
+</div>
+
+<script>
+    function calculate() {
+        const P = parseFloat(document.getElementById('principal').value) || 0;
+        const PMT = parseFloat(document.getElementById('monthly').value) || 0;
+        const annualRate = parseFloat(document.getElementById('rate').value) / 100 || 0;
+        const t = parseFloat(document.getElementById('years').value) || 0;
+        
+        // Compound monthly (n = 12)
+        const n = 12;
+        const r = annualRate / n;
+        const nt = n * t;
+
+        // Formula for Compound Interest with Monthly Contributions:
+        // A = P(1+r/n)^(nt) + PMT * [((1+r/n)^(nt) - 1) / (r/n)]
+        
+        let futureValue = 0;
+        
+        if (annualRate === 0) {
+            futureValue = P + (PMT * nt);
+        } else {
+            const compoundPrincipal = P * Math.pow((1 + r), nt);
+            const compoundSeries = PMT * ((Math.pow((1 + r), nt) - 1) / r);
+            futureValue = compoundPrincipal + compoundSeries;
+        }
+
+        const totalInvested = P + (PMT * nt);
+        const interestEarned = futureValue - totalInvested;
+
+        // Update UI
+        document.getElementById('totalBalance').innerText = formatCurrency(futureValue);
+        document.getElementById('totalDeposits').innerText = formatCurrency(totalInvested);
+        document.getElementById('totalInterest').innerText = formatCurrency(interestEarned);
+    }
+
+    function formatCurrency(num) {
+        return new Intl.NumberFormat('en-US', {
+            style: 'currency',
+            currency: 'USD',
+        }).format(num);
+    }
+
+    // Run on load
+    window.onload = calculate;
+</script>
+
+</body>
+</html>
