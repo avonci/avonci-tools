@@ -29,68 +29,78 @@
     <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
 
     <style>
-        .result-display {
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 25px;
-            margin: 20px 0;
-            text-align: center;
-        }
+    .tool-card {
+        max-width: 600px !important;
+        align-items: stretch !important;
+        text-align: left !important;
+        margin: 0 auto !important;
+    }
 
-        .total-amount {
-            font-size: 2.5rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 10px 0;
-        }
+    .result-display {
+        background: rgba(15, 23, 42, 0.8);
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 25px;
+        margin: 20px 0;
+        text-align: center;
+        width: 100%;
+        box-sizing: border-box;
+    }
 
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
+    .total-amount {
+        font-size: 2.5rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin: 10px 0;
+    }
 
-        .stat-item {
-            padding: 15px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 10px;
-            border: 1px solid var(--border);
-        }
+    .stats-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-top: 20px;
+    }
 
-        .stat-label {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            color: var(--muted);
-            letter-spacing: 0.05em;
-        }
+    .stat-item {
+        padding: 15px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 10px;
+        border: 1px solid var(--border);
+    }
 
-        .stat-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: var(--text);
-            margin-top: 5px;
-        }
+    .stat-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        color: var(--muted);
+        letter-spacing: 0.05em;
+    }
 
-        .input-group {
-            text-align: left;
-            margin-bottom: 15px;
-        }
+    .stat-value {
+        font-size: 1.1rem;
+        font-weight: 600;
+        color: var(--text);
+        margin-top: 5px;
+    }
 
-        label {
-            font-size: 0.85rem;
-            color: var(--muted);
-            margin-bottom: 5px;
-            display: block;
-        }
+    .input-group {
+        text-align: left;
+        margin-bottom: 15px;
+        width: 100%;
+    }
 
-        .tool-card {
-            max-width: 600px !important;
-            align-items: stretch !important;
-            text-align: left !important;
-        }
-    </style>
+    .tool-card input {
+        width: 100% !important;
+        max-width: 100% !important; 
+        margin: 8px 0 !important;
+    }
+
+    label {
+        font-size: 0.85rem;
+        color: var(--muted);
+        margin-bottom: 5px;
+        display: block;
+    }
+</style>
 </head>
 
 <body>
