@@ -5,7 +5,7 @@ const categories = [
     "Brands of Beer", "Types of Drugs (Medical or not)", "Curse words in other languages",
     "Sex toys", "Brands of condoms", "Tekmovalci kmetije 2026", "Things you've searched in Incognito mode",
     "Pornstars", "Sex positions", "Things you shouldn't say to a pregnant woman", "Slang terms for being 'absolutely wasted'", 
-    "Conspiracy theories that actually make sense", "Inappropriate nicknames for your boss", "Ways to describe a 'zesty' person", 
+    "Conspiracy theories that actually make sense", "Inappropriate nicknames for your boss",
     "Pickup lines", "Places you've peed (besides a toilet)", "Items you'd use to wipe if there was no toilet paper",
     "Things you'd do if you were invisible for exactly 1 hour", "Places to hide a dead body", "Ways to kill someone", "Car brands",
     "Adult Site Names", "Cigarette Brands", "Hard Liquor Brands", "Famous Dictators", "Energy Drink Brands", "Gambling/Casino Games",
